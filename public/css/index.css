@@ -1,0 +1,39 @@
+form.login, form.register {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.group-of-forms {
+    margin-top: 150px;
+}
+
+
+.button-register-group{
+    width: 444px;
+display: inline-block;
+}
+
+.main-headline{
+    text-align: center;
+    color: red;
+}
+.main-headline .headline {font-size: 48px;}
+
+.redirect-to-main-page{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.headline-dashboard{
+    margin-top: 50px;
+}
+.headline-dashboard .logout {
+    color: red;
+    font-weight: bold;
+    text-align:  justify;
+    position: absolute;
+    margin-left: 400px;
+}
+.redirect-to-main-page a {
+    text-decoration: none;
+}

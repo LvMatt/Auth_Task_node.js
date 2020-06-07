@@ -1,0 +1,9 @@
+
+footer {
+    height:80px;
+    background-color: #f8f9fa;
+
+}
+.footer-copyright p span.line{padding-left: 10px;} .footer-copyright p span.name{  font-weight: bold; font-variant: small-caps}
+
+.footer-copyright p span.synopsis{font-variant: small-caps;padding-left: 10px;}

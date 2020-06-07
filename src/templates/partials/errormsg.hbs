@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/error.css">
+
+</head>
+<body>
+    
+{{#if errors}}
+
+<div class="text-div" role="alert">
+<p>Please enter all fields</p>
+</div>
+{{/if}}
+
+{{#if success_msg}}
+{{success_msg}}
+{{/if}}
+
+{{#if error}}
+
+<div class="text-div" role="alert">
+ {{error}}
+ 
+</div>
+{{/if}}
+
+</body>
+</html>

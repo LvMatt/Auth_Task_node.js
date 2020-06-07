@@ -1,0 +1,10 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.nav{
+    height: 100px;
+    background-color: rosybrown;
+    width: 100%;
+}
