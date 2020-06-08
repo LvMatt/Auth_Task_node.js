@@ -70,7 +70,18 @@ router.get('/', forwardAuthenticated , (req, res)=>{
           password,
         });
       }
-      console.log(errors);
+
+   
+      if(req.body.email === user.email){
+          console.log("Error")
+         req.flash(
+            'error',
+            'Email exists already'
+          ); 
+          res.status(201).redirect('/register')
+      }
+      else{
+
         try {
             await user.save()
             const token = await user.generateAuthToken()
@@ -82,6 +93,7 @@ router.get('/', forwardAuthenticated , (req, res)=>{
               res.status(201).redirect('/')
         } catch (e) {
         }
+    }
     })
 
 /* function insertRecord(req, res) {
@@ -152,9 +164,7 @@ router.post('/users/login', async (req, res, next) => {
     if (!email || !password ) {
         errors.push({ msg: 'Please enter all fields' });
       }
-      if(!user){
-        errors.push({ msg: 'Please dont work' });
-      }
+
       console.log(errors)
       if (errors.length > 0) {
         res.render('index', {

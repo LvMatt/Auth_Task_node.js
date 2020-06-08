@@ -2,6 +2,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose')
 const User = require('../models/user')
+const flash = require('connect-flash');
 
 module.exports = function(passport) {
     passport.use(
@@ -11,7 +12,9 @@ module.exports = function(passport) {
           email: email
         }).then(user => {
           if (!user) {
-            return done(null, false, { message: 'That email is not registered' });
+            console.log("Password incorrect ")
+           // req.flash('success_msg', 'You are now registered and can log in')
+            return done(null, false, { message: 'Email or Password incorrect' }  )
           }
   
           // Match password
@@ -20,7 +23,8 @@ module.exports = function(passport) {
             if (isMatch) {
               return done(null, user);
             } else {
-              return done(null, false, { message: 'Password incorrect' });
+              console.log("sdadsad")
+              return done(null, false, { message: 'Email or Password incorrect' });
               
             }
           });
