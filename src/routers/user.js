@@ -5,6 +5,8 @@ const router = new express.Router()
 const path = require('path');
 const hbs = require('hbs');
 //const auth = require('../middleware/authentication')
+var bcrypt = require('bcryptjs');
+
 const app = express()
 const viewsPath = path.join(__dirname, '../templates/views')
 const passport = require('passport');
@@ -56,6 +58,15 @@ router.get('/', forwardAuthenticated , (req, res)=>{
       if (!fullname || !email || !password ) {
         errors.push({ msg: 'Please enter all fields' });
       }
+
+      if( user.email === "qqqq"){
+        console.log("Error")
+       req.flash(
+          'error',
+          'Email exists already'
+        ); 
+        res.status(201).redirect('/register')
+    }
       if (errors.length > 0) {
         res.render('register', {
           errors,
@@ -66,14 +77,7 @@ router.get('/', forwardAuthenticated , (req, res)=>{
       }
 
    
-      if(req.body.email === user.email){
-          console.log("Error")
-         req.flash(
-            'error',
-            'Email exists already'
-          ); 
-          res.status(201).redirect('/register')
-      }
+      
       else{
 
         try {
@@ -118,6 +122,34 @@ router.post('/users/login', async (req, res, next) => {
             failureFlash: true,
           })(req, res, next);
       }
+})
+
+router.post('/update',  async (req, res) => {
+	const updates = Object.keys(req.body)
+	const allowedUpdates = ['oldpassword', 'password']
+	const isValidOperation = updates.every((update) => allowedUpdates.includes(update)) 
+
+	if (!isValidOperation) {
+		return res.status(400).send({ error: 'Invalid update' })
+    }
+	try {
+        const authenticated = await bcrypt.compare(req.body.oldpassword, req.user.password)
+        if (authenticated) { 
+            console.log("moree :)")
+             req.user['password'] = req.body['oldpassword'] 
+             updates.forEach((update) => req.user[update] = req.body[update])
+        }
+
+        else { 
+            req.flash('error', 'Wrong password');
+            res.status(400).redirect('/dashboard')
+		}
+		await req.user.save()
+		res.redirect('/dashboard')
+	} catch (e) {
+        req.flash('error', 'Your passwords didnt match');
+		res.status(400).redirect('/dashboard')
+	}
 })
 
 router.get('/users/logout', (req, res) => {
